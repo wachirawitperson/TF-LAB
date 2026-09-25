@@ -205,13 +205,13 @@ export function PortalApp() {
             <span><strong className="block text-lg leading-5">TF LAB</strong><span className="text-[11px] text-sidebar-foreground/65">Personal portal</span></span>
           </button>
         </SidebarHeader>
-        <SidebarContent className="px-4">
+        <SidebarContent className="px-6">
           <SidebarGroup className="p-0">
             <SidebarGroupContent>
               <SidebarMenu className="gap-2">
                 {mainNav.map((item) => (
                   <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton isActive={view === item.id} onClick={() => setCurrentView(item.id)} className="h-11 rounded-xl bg-sidebar-accent px-3.5 text-[15px] data-[active=true]:font-semibold">
+                    <SidebarMenuButton isActive={view === item.id} onClick={() => setCurrentView(item.id)} className="h-11 rounded-xl bg-sidebar-accent px-3.5 text-[15px] font-medium text-sidebar-foreground/70 data-[active=true]:font-semibold data-[active=true]:text-sidebar-accent-foreground">
                       <span className={`size-[9px] rounded-full ${view === item.id ? "bg-sidebar-primary" : "bg-sidebar-foreground/50"}`} />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
@@ -226,7 +226,7 @@ export function PortalApp() {
               <SidebarMenu className="gap-2">
                 {adminNav.map((item) => (
                   <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton isActive={view === item.id} onClick={() => setCurrentView(item.id)} className="h-11 rounded-xl bg-sidebar-accent px-3.5 text-[15px] data-[active=true]:font-semibold">
+                    <SidebarMenuButton isActive={view === item.id} onClick={() => setCurrentView(item.id)} className="h-11 rounded-xl bg-sidebar-accent px-3.5 text-[15px] font-medium text-sidebar-foreground/70 data-[active=true]:font-semibold data-[active=true]:text-sidebar-accent-foreground">
                       <span className={`size-[9px] rounded-full ${view === item.id ? "bg-sidebar-primary" : "bg-sidebar-foreground/50"}`} />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
@@ -238,7 +238,7 @@ export function PortalApp() {
         </SidebarContent>
         <SidebarFooter className="px-6 pb-6">
           <div className="flex h-12 items-center justify-between rounded-[14px] bg-sidebar-accent px-3.5 text-sm font-semibold">
-            <span>{resolvedTheme === "dark" ? "Dark mode" : "Light mode"}</span>
+            <span>Dark mode</span>
             <Switch aria-label="สลับโหมดสี" checked={resolvedTheme === "dark"} onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")} />
           </div>
         </SidebarFooter>
@@ -290,7 +290,7 @@ function MobileHeader({ theme, setTheme }: { theme?: string; setTheme: (theme: s
         <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
           {theme === "dark" ? <Sun /> : <Moon />}<span className="sr-only">สลับโหมดสี</span>
         </Button>
-        <SidebarTrigger className="size-[42px] rounded-xl bg-sidebar-accent"><Menu /><span className="sr-only">เปิดเมนู</span></SidebarTrigger>
+        <SidebarTrigger aria-label="เปิดเมนู" className="size-[42px] rounded-xl bg-sidebar-accent"><Menu /><span className="sr-only">เปิดเมนู</span></SidebarTrigger>
       </div>
     </header>
   )
@@ -321,7 +321,7 @@ function HomePanel({ view, data, tools, query, onQuery, category, onCategory, on
 
       {view === "home" && (
         <section className="mb-6" aria-labelledby="quick-title">
-          <div className="mb-5 hidden items-center justify-between md:flex"><h2 id="quick-title" className="text-xl font-semibold">Quick Access</h2><button className="text-[13px] font-semibold text-primary" onClick={() => onView("favorites")}>ดูทั้งหมด</button></div>
+          <div className="mb-6 hidden min-h-8 items-center justify-between md:flex"><h2 id="quick-title" className="text-xl font-semibold">Quick Access</h2><button className="text-[13px] font-semibold text-primary" onClick={() => onView("favorites")}>ดูทั้งหมด</button></div>
           <div className="grid grid-cols-3 gap-2.5 md:gap-3.5">
             {data.tools.filter((tool) => tool.favorite).slice(0, 3).map((tool) => (
               <button key={tool.id} onClick={() => onOpen(tool)} className="flex h-24 flex-col items-start justify-center gap-1 rounded-[18px] border bg-card p-3 text-left transition hover:-translate-y-0.5 md:h-[104px] md:flex-row md:items-center md:gap-3.5 md:px-[18px]">
@@ -334,12 +334,12 @@ function HomePanel({ view, data, tools, query, onQuery, category, onCategory, on
       )}
 
       <section aria-labelledby="tools-title">
-        <div className="mb-5 flex items-center justify-between"><h2 id="tools-title" className="text-[20px] font-semibold">เครื่องมือทั้งหมด</h2><span className="hidden text-[13px] font-semibold text-primary md:block">จัดเรียงล่าสุด</span></div>
-        <div className="mb-4 hidden gap-2.5 overflow-x-auto pb-1 md:flex">
+        <div className="mb-6 flex min-h-8 items-center justify-between"><h2 id="tools-title" className="text-[20px] font-semibold">เครื่องมือทั้งหมด</h2><span className="hidden text-[13px] font-semibold text-primary md:block">จัดเรียงล่าสุด</span></div>
+        <div className="mb-6 hidden min-h-[42px] gap-2.5 overflow-x-auto pb-1 md:flex">
           <FilterButton active={category === "all"} onClick={() => onCategory("all")}>ทั้งหมด</FilterButton>
           {data.categories.map((item) => <FilterButton key={item.id} active={category === item.id} onClick={() => onCategory(item.id)}>{item.name}</FilterButton>)}
         </div>
-        {loading ? <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-6">{[0, 1, 2, 3].map((item) => <div key={item} className="aspect-[.72] animate-pulse rounded-[20px] bg-muted" />)}</div> : tools.length ? <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-6 xl:grid-cols-4">{tools.map((tool) => <ToolCard key={tool.id} tool={tool} category={data.categories.find((item) => item.id === tool.categoryId)} onOpen={onOpen} onFavorite={onFavorite} />)}</div> : <div className="rounded-[20px] border border-dashed p-10 text-center text-muted-foreground">ไม่พบเครื่องมือในรายการนี้</div>}
+        {loading ? <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-6 xl:grid-cols-[repeat(4,244px)]">{[0, 1, 2, 3].map((item) => <div key={item} className="aspect-[.72] animate-pulse rounded-[20px] bg-muted md:h-[340px] md:aspect-auto" />)}</div> : tools.length ? <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-6 xl:grid-cols-[repeat(4,244px)]">{tools.map((tool) => <ToolCard key={tool.id} tool={tool} category={data.categories.find((item) => item.id === tool.categoryId)} onOpen={onOpen} onFavorite={onFavorite} />)}</div> : <div className="rounded-[20px] border border-dashed p-10 text-center text-muted-foreground">ไม่พบเครื่องมือในรายการนี้</div>}
       </section>
     </>
   )
@@ -357,7 +357,7 @@ function FilterButton({ active, onClick, children }: { active: boolean; onClick:
 
 function ToolCard({ tool, category, onOpen, onFavorite }: { tool: PortalTool; category?: Category; onOpen: (tool: PortalTool) => void; onFavorite: (tool: PortalTool) => void }) {
   return (
-    <article className="relative flex min-w-0 flex-col gap-2.5 rounded-[20px] border bg-card p-2.5 shadow-[0_8px_12px_rgba(51,41,20,.10)] md:gap-3 md:p-4">
+    <article className="relative flex min-w-0 flex-col gap-2.5 rounded-[20px] border bg-card p-2.5 shadow-[0_8px_12px_rgba(51,41,20,.10)] md:h-[340px] md:gap-3 md:p-4">
       <button aria-label={`เปิด ${tool.name}`} className={`cover-${tool.cover} aspect-square w-full rounded-[16px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`} onClick={() => onOpen(tool)} />
       <button className="truncate text-left text-sm font-semibold md:text-[17px]" onClick={() => onOpen(tool)}>{tool.name}</button>
       <div className="flex h-6 items-center justify-between"><span className="truncate text-xs font-medium text-muted-foreground">{category?.name ?? "ทั่วไป"}</span><button aria-label={tool.favorite ? `นำ ${tool.name} ออกจากรายการโปรด` : `เพิ่ม ${tool.name} ในรายการโปรด`} className="text-primary" onClick={() => onFavorite(tool)}><Star className={`size-4 ${tool.favorite ? "fill-current" : ""}`} /></button></div>
